@@ -3,9 +3,9 @@ using namespace std;
 #include <string>
 #include <fstream>
 #include <iomanip>
+#include <cmath>
 
-class realEstate
-{
+class realEstate {
 private:
     string address;
     long long buyingPrice;
@@ -16,8 +16,7 @@ private:
 
 public:
     realEstate() {address = "None", buyingPrice = 0, rent = 0, onePercent = 0.00;}
-    realEstate(string a, long long bp, int r)
-    {
+    realEstate(string a, long long bp, int r) {
         address = a;
         buyingPrice = bp;
         rent = r;
@@ -26,8 +25,7 @@ public:
     long getBuyingPrice() { return buyingPrice; }
     int getRent() { return rent; }
     void onePercentRule();
-    string onePercentRule(long bp, int r)
-    {
+    string onePercentRule(long bp, int r) {
         buyingPrice = bp;
         rent = r;
         double onePercentNumber = 0.01;
@@ -60,23 +58,84 @@ public:
     }
 };
 
-int main()
-{   
+int main() {   
     string address;
-    int buyingPrice;
-    int rent;
-    int cashFlowMonthly;
-    int downPayment;
-    double closingCostPercent = 0.05;
+    int buyingPrice; // The Price The Home Was Bought At
+    int rent; // Rent Monthly
+    int cashFlowMonthly; // Cashflow Monthly
+    int downPayment; // Down Payment 
+    double closingCostPercent = 0.05; // Change this because closing cost varies between transactions ranging from 3 - 6 % depending on your realtor
     int repairCost;
 
-    // Mortgage Calculator Variables
-    // double annualInterestRate;
-    // double loanAmount;
-    // double monthlyInterestRate;
-    // double numberOfPayments;
-    // double totalPayBack;
-    // double monthlyPayment;
+
+
+    double annualInterestRate; // Yearly Interest Rate
+    double loanAmount; // The Amount Of The Loan
+    double monthlyInterestRate; // Interest Rate Amount Monthly
+    double numberofPayments; // The Amount Of Payments
+    double totalYearsToRepay; // Years Needed To Payback
+    double propertyTax; // Propertytax Monthly
+    int homeOwnersInsurance; // Home Owners Insurance Monthly
+    int hoa; // Home Owners Asosciation Monthly
+    char ans; // Check to see if they would like to calculate Mortgage
+
+    cout << "Calculate Mortgage? (Y/N): "; // If ans is N or n, it moves on to the Real Estate Calculator
+    cin >> ans;
+
+    if(ans == 'y' || ans == 'Y') {
+
+    cout << "Enter the amount of the loan: ";
+    cin >> loanAmount;
+
+    cout << "Enter annual interest rate in decimal term: ";
+    cin >> annualInterestRate;
+
+    cout << "Enter the length of the loan in years: ";
+    cin >> totalYearsToRepay;
+
+    cout << "Property Tax (Monthly): ";
+    cin >> propertyTax;
+
+    cout <<"Home Owners Insurance (Monthly): ";
+    cin >> homeOwnersInsurance;
+
+    cout << "HOA (Monthly): ";
+    cin >> hoa;
+
+    loanAmount = loanAmount;
+
+    cout << "loanAmount: $" << setprecision(2) << fixed << loanAmount << endl;
+
+    annualInterestRate = annualInterestRate / 100;
+
+    cout << "annualInterestRate: $" << setprecision(2) << fixed << annualInterestRate * 100 << "%" << endl;
+
+    cout << "totalYearsToRepay: " << setprecision(0) << fixed << totalYearsToRepay << endl;
+
+    monthlyInterestRate=annualInterestRate / 12; // Converts monthly interest rate to a percentage out of 100
+
+    totalYearsToRepay = totalYearsToRepay; 
+
+    numberofPayments = totalYearsToRepay* 12;
+
+    double powerFactor = std::pow(1.0 + monthlyInterestRate, numberofPayments);
+    double monthlyPayment = (loanAmount * monthlyInterestRate * powerFactor) / (powerFactor - 1.0) + (hoa + homeOwnersInsurance + propertyTax) ;
+
+    cout << "Monthly Payment: $" << setprecision(2) << fixed << monthlyPayment << endl;
+    cout << "\n";
+
+
+    cin.ignore();
+    cin.clear();
+    }  
+    char ansTwo;
+    cout << "\n";
+    cout << "Real Estate Analysis? (Y/N): ";
+    cin >> ansTwo;
+
+    if(ansTwo == 'Y' || ansTwo == 'y') {
+    cin.ignore();
+    cin.clear();
 
     cout << "Address: ";
     getline(cin,address);
@@ -84,35 +143,39 @@ int main()
     cin >> buyingPrice;
     cout << "Down Payment Percentage: ";
     cin >> downPayment;
-    std::cout << "Repair Cost: ";
-    std::cin >> repairCost;
+    cout << "Repair Cost: ";
+    cin >> repairCost;
     cout << "Rent Monthly: ";
     cin >> rent;
-    std::cout << "Cashflow Monthly: ";
-    std::cin >> cashFlowMonthly;
+    cout << "Cashflow Monthly: ";
+    cin >> cashFlowMonthly;
 
     realEstate firstHome;
     firstHome.setAddress(address);
     firstHome.setBuyingPrice(buyingPrice);
     firstHome.setRent(rent);
     
-    std::cout <<"\n";
-    std::cout << "================================================" << std::endl;
-    std::cout << "Real Estate Calculator Created By Austin Nguyen" << std::endl;
-    std::cout << "================================================" << std::endl;
-    std::cout << "Address: " << firstHome.getAddress() << std::endl;
-    std::cout << "\n";
-    std::cout << "Buying Price: " << firstHome.getBuyingPrice() << std::endl;
-    std::cout << "\n";
-    std::cout << "Rent: " << firstHome.getRent() << std::endl;
-    std::cout << "\n";
-    std::cout << "Does It Pass One Percent Rule? " << firstHome.onePercentRule(buyingPrice,rent) << std::endl;
-    std::cout << "\n";
-    std::cout << "Cash On Cash Return: " << firstHome.cashOnCashReturn(cashFlowMonthly,buyingPrice,downPayment,closingCostPercent,repairCost) << + "%" << std::endl;
-    std::cout << "\n";
-    std::cout << "================================================" << std::endl;
-    std::cin.clear();
+    cout <<"\n";
+    cout << "================================================" << std::endl;
+    cout << "Real Estate Calculator Created By Austin Nguyen" << std::endl;
+    cout << "================================================" << std::endl;
+    cout << "Address: " << firstHome.getAddress() << std::endl;
+    cout << "\n";
+    cout << "Buying Price: " << firstHome.getBuyingPrice() << std::endl;
+    cout << "\n";
+    cout << "Rent: " << firstHome.getRent() << std::endl;
+    cout << "\n";
+    cout << "Does It Pass One Percent Rule? " << firstHome.onePercentRule(buyingPrice,rent) << std::endl;
+    cout << "\n";
+    cout << "Cash On Cash Return: " << firstHome.cashOnCashReturn(cashFlowMonthly,buyingPrice,downPayment,closingCostPercent,repairCost) << + "%" << std::endl;
+    cout << "\n";
+    if(firstHome.cashOnCashReturn(cashFlowMonthly,buyingPrice,downPayment,closingCostPercent,repairCost) >= 12) {
+        cout << "Based off the analysis this property is worth investing in!" << std::endl;
+    } else {
+        cout <<"Based off the analysis this property is NOT worth investing" << std::endl;
+    }
     
-
-
+    cout << "================================================" << std::endl;
+    cin.clear();
+    }
 }
