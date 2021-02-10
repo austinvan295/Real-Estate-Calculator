@@ -161,9 +161,11 @@ int main() {
     cout << "================================================" << std::endl;
     cout << "Address: " << firstHome.getAddress() << std::endl;
     cout << "\n";
-    cout << "Buying Price: " << firstHome.getBuyingPrice() << std::endl;
+    cout << "Buying Price: $" << firstHome.getBuyingPrice() << std::endl;
     cout << "\n";
-    cout << "Rent: " << firstHome.getRent() << std::endl;
+    cout << "Rent: $" << firstHome.getRent() << std::endl;
+    cout << "\n";
+    cout << "$" << "Cashflow Monthly: $" << cashFlowMonthly << std::endl;
     cout << "\n";
     cout << "Does It Pass One Percent Rule? " << firstHome.onePercentRule(buyingPrice,rent) << std::endl;
     cout << "\n";
