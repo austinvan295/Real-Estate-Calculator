@@ -47,6 +47,13 @@ public:
         return cashOnCash;
     }
 
+    double capRate(double cashFlowMonthly, double buyingPrice) {
+        int cashFlowYearly = cashFlowMonthly * 12;
+        double capR = cashFlowYearly / (double)(buyingPrice)* 100;
+        cout << setprecision(1);
+        return capR;
+    }
+
     void setAddress(string x) {
         address = x;
     }
@@ -56,6 +63,7 @@ public:
     void setRent(int z) {
         rent = z;
     }
+
 };
 
 int main() {   
@@ -176,8 +184,10 @@ int main() {
     } else {
         cout <<"Based off the analysis this property is NOT worth investing" << std::endl;
     }
+    cout << "\n";
+    cout << "Cap Rate: " << firstHome.capRate(cashFlowMonthly, buyingPrice) << "%";
+    cout << "\n";
     
     cout << "================================================" << std::endl;
-    cin.clear();
     }
 }
