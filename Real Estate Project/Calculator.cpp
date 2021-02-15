@@ -12,6 +12,7 @@ private:
     int rent;
     double onePercent;
     long moneyInvested;
+    int cashFlowMonthly;
     
 
 public:
@@ -24,6 +25,7 @@ public:
     string getAddress() { return address; }
     long getBuyingPrice() { return buyingPrice; }
     int getRent() { return rent; }
+    int getCashFlow() {return cashFlowMonthly;}
     void onePercentRule();
     string onePercentRule(long bp, int r) {
         buyingPrice = bp;
@@ -43,7 +45,7 @@ public:
         long closingCostTotal = closingCost * buyingPrice;
         int cashInvestment = downPaymentCashInvested + repairs + closingCostTotal;
         double cashOnCash = yearlyCashFlow / (double)(cashInvestment)* 100;
-        cout << fixed << setprecision(2);
+        cout << fixed << setprecision(1);
         return cashOnCash;
     }
 
@@ -54,6 +56,11 @@ public:
         return capR;
     }
 
+    string worthInvesting(int capRate) {
+        if(capRate >= 15)
+            return "Yes";
+        return "No";
+    }
     void setAddress(string x) {
         address = x;
     }
@@ -62,6 +69,10 @@ public:
     }
     void setRent(int z) {
         rent = z;
+    }
+
+    void setCashFlowMonthly(int a) {
+        cashFlowMonthly = a;
     }
 
 };
@@ -112,13 +123,13 @@ int main() {
 
     loanAmount = loanAmount;
 
-    cout << "loanAmount: $" << setprecision(2) << fixed << loanAmount << endl;
+    cout << "loanAmount: $" << setprecision(2) << loanAmount << endl;
 
     annualInterestRate = annualInterestRate / 100;
 
-    cout << "annualInterestRate: $" << setprecision(2) << fixed << annualInterestRate * 100 << "%" << endl;
+    cout << "annualInterestRate: $" << setprecision(2) << annualInterestRate * 100 << "%" << endl;
 
-    cout << "totalYearsToRepay: " << setprecision(0) << fixed << totalYearsToRepay << endl;
+    cout << "totalYearsToRepay: " << setprecision(0) << totalYearsToRepay << endl;
 
     monthlyInterestRate=annualInterestRate / 12; // Converts monthly interest rate to a percentage out of 100
 
@@ -162,7 +173,22 @@ int main() {
     firstHome.setAddress(address);
     firstHome.setBuyingPrice(buyingPrice);
     firstHome.setRent(rent);
+    int capRate = firstHome.capRate(cashFlowMonthly,buyingPrice);
+    firstHome.setCashFlowMonthly(cashFlowMonthly);
     
+    cout << fixed << setprecision(1) << endl;
+    ofstream my_file("Houses.txt",std::ios::app);
+    my_file << "Address: " << firstHome.getAddress() << endl;
+    my_file << "Buying Price: " << firstHome.getBuyingPrice() << endl;
+    my_file << "Rent: " << firstHome.getRent() << endl;
+    my_file << "Cash Flow Monthly: " << firstHome.getCashFlow() << endl;
+    my_file << "Does It Pass One Percent Rule: " << firstHome.onePercentRule(buyingPrice,rent) << endl;
+    my_file << "Cash On Cash Return: " << firstHome.cashOnCashReturn(cashFlowMonthly, buyingPrice, downPayment, closingCostPercent, repairCost) << "%" << endl;
+    my_file << "Worth Investing: " << firstHome.worthInvesting(capRate);
+    my_file << "\n";
+    my_file << "Cap Rate: " << firstHome.capRate(cashFlowMonthly, buyingPrice) << "%" << endl;
+    my_file << "\n";
+
     cout <<"\n";
     cout << "================================================" << std::endl;
     cout << "Real Estate Calculator Created By Austin Nguyen" << std::endl;
@@ -173,20 +199,19 @@ int main() {
     cout << "\n";
     cout << "Rent: $" << firstHome.getRent() << std::endl;
     cout << "\n";
-    cout << "$" << "Cashflow Monthly: $" << cashFlowMonthly << std::endl;
+    cout << "Cashflow Monthly: $" << firstHome.getCashFlow() << std::endl;
     cout << "\n";
     cout << "Does It Pass One Percent Rule? " << firstHome.onePercentRule(buyingPrice,rent) << std::endl;
     cout << "\n";
     cout << "Cash On Cash Return: " << firstHome.cashOnCashReturn(cashFlowMonthly,buyingPrice,downPayment,closingCostPercent,repairCost) << + "%" << std::endl;
     cout << "\n";
-    if(firstHome.cashOnCashReturn(cashFlowMonthly,buyingPrice,downPayment,closingCostPercent,repairCost) >= 12) {
+    if(firstHome.cashOnCashReturn(cashFlowMonthly,buyingPrice,downPayment,closingCostPercent,repairCost) >= 15) {
         cout << "Based off the analysis this property is worth investing in!" << std::endl;
     } else {
         cout <<"Based off the analysis this property is NOT worth investing" << std::endl;
     }
     cout << "\n";
-    cout << "Cap Rate: " << firstHome.capRate(cashFlowMonthly, buyingPrice) << "%";
-    cout << "\n";
+    cout << "Cap Rate: " << firstHome.capRate(cashFlowMonthly,buyingPrice) << "%" << endl;
     
     cout << "================================================" << std::endl;
     }
