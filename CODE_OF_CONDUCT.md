@@ -1,7 +1,7 @@
 ![CODE OF CONDUCT (1)](https://user-images.githubusercontent.com/63253596/107134897-b7fe4700-68bb-11eb-9557-03222f46b647.png)
 
 <b><h2>Our Pledge<h3><b>
-<h3>In the interest of fostering an open and welcoming environment, we as contributors and maintainers pledge to making participation in our project and our community a harassment-free experience for everyone, regardless of age, body size, disability, ethnicity, gender identity and expression, level of experience, education, socio-economic status, nationality, personal appearance, race, religion, or sexual identity and orientation.<h3>
+<h4>In the interest of fostering an open and welcoming environment, we as contributors and maintainers pledge to making participation in our project and our community a harassment-free experience for everyone, regardless of age, body size, disability, ethnicity, gender identity and expression, level of experience, education, socio-economic status, nationality, personal appearance, race, religion, or sexual identity and orientation.<h4>
 
 <b><h2>Our Standards<b><h2>
 <h3>Examples of behavior that contributes to creating a positive environment include:<h3>
